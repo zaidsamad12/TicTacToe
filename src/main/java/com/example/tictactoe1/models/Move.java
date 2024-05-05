@@ -2,21 +2,32 @@ package com.example.tictactoe1.models;
 
 public class Move {
 
-    private Symbol symbol;
-    private Cell cell;
+    private int row;
+    private int col;
     private Player player;
-    public Symbol getSymbol() {
-        return symbol;
+
+    public int getRow() {
+        return row;
     }
-    public void setSymbol(Symbol symbol) {
-        this.symbol = symbol;
+
+    public void setRow(int row) {
+        this.row = row;
     }
-    public Cell getCell() {
-        return cell;
+
+    public Move(int row, int col, Player player) {
+        this.row = row;
+        this.col = col;
+        this.player = player;
     }
-    public void setCell(Cell cell) {
-        this.cell = cell;
+
+    public int getCol() {
+        return col;
     }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
     public Player getPlayer() {
         return player;
     }

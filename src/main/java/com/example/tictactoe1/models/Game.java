@@ -3,10 +3,7 @@ package com.example.tictactoe1.models;
 import com.example.tictactoe1.exceptions.DuplicateSymbolException;
 import com.example.tictactoe1.gamewinningstrategies.GameWinningStrategy;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Game {
 
@@ -18,6 +15,7 @@ public class Game {
     private int lastMovedPlayerIndex;
     private GameStatus gameStatus;
     private Player winner;
+    private int filledCells;
 
     private Game(){}
 
@@ -66,6 +64,31 @@ public class Game {
     }
     public void setWinner(Player winner) {
         this.winner = winner;
+    }
+
+    public void makeMove(){
+        this.board.display();
+        this.lastMovedPlayerIndex +=1;
+        this.lastMovedPlayerIndex %=players.size();
+        Move potentialMove = this.players.get(this.lastMovedPlayerIndex).makeMove(this.getBoard());
+        if(this.board.getCell(potentialMove.getRow(), potentialMove.getCol()).getPlayer()!=null)
+            System.out.println("Bad Move!!");
+        else {
+            this.moves.add(potentialMove);
+            this.board.getCell(potentialMove.getRow(),
+                            potentialMove.getCol()).setPlayer(this.players.get(this.lastMovedPlayerIndex));
+            filledCells++;
+        }
+        for(GameWinningStrategy  gameWinningStrategy : gameWinningStrategies){
+            if(gameWinningStrategy.checkVictory(board, potentialMove)) {
+                this.setGameStatus(GameStatus.ENDED);
+                this.winner = this.players.get(this.lastMovedPlayerIndex);
+                return;
+            }
+        }
+        int dimension = this.players.size()+1;
+        if(filledCells == (dimension*dimension))
+            this.setGameStatus(GameStatus.ENDED);
     }
 
 

@@ -5,10 +5,7 @@ import com.example.tictactoe1.factories.BotDifficultyLevelFactory;
 import com.example.tictactoe1.factories.GameWininngStrategyFactory;
 import com.example.tictactoe1.factories.PlayerFactory;
 import com.example.tictactoe1.gamewinningstrategies.GameWinningStrategy;
-import com.example.tictactoe1.models.BotDifficultyLevel;
-import com.example.tictactoe1.models.Game;
-import com.example.tictactoe1.models.Player;
-import com.example.tictactoe1.models.PlayerType;
+import com.example.tictactoe1.models.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -69,6 +66,10 @@ public class TicTacToe1Application {
         Game game = Game.getBuilder()
                 .setPlayers(players).
                 setGameWinningStrategies(gameWinningStrategies).Build();
+
+        while(game.getGameStatus().equals(GameStatus.IN_PROGRESS)){
+            game.makeMove();
+        }
 
     }
 
